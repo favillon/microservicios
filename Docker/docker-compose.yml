@@ -1,0 +1,37 @@
+version: '3'
+services:
+  basedatos:
+    image: "postgres:12"
+    ports:
+      - "5432:5432"
+    env_file:
+      - secret/basedatos.env
+    volumes:
+      - database-data:/var/lib/postgresql/data/
+  basedatostest:
+    image: "postgres"
+    ports:
+      - "5433:5432"
+    env_file:
+      - secret/basedatostest.env
+    volumes:
+      - basedatostest-data:/var/lib/postgresql/data/
+
+volumes:
+  database-data:
+  basedatostest-data:
+
+# Ejecutar
+## cd Docker/ && docker-compose up -d
+# docker-compose run basedatos bash
+## psql -h basedatos -U microservice microservice
+# docker-compose run basedatostest bash
+## psql -h basedatostest -U microservice microservicetest
+
+# Detener
+## docker-compose down
+
+# Archivos claves
+## POSTGRES_USER=<<USER>>
+## POSTGRES_PASSWORD=<<CLAVE>>
+## POSTGRES_DB=<<BD>>
